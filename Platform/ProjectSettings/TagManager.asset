@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Climbing
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -48,11 +50,17 @@ TagManager:
   - name: Water
     uniqueID: 1674318279
     locked: 0
-  - name: Platforms
+  - name: Ground
     uniqueID: 3059695659
+    locked: 0
+  - name: Wall
+    uniqueID: 1814600409
     locked: 0
   - name: Climbing
     uniqueID: 2733906241
+    locked: 0
+  - name: Enemy
+    uniqueID: 2200720387
     locked: 0
   - name: Player
     uniqueID: 1629855145
