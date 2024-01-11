@@ -30,7 +30,6 @@ public class EnemyMovement : MonoBehaviour
             FlipEnemyFacing();
         }
     }
-
     void FlipEnemyFacing()
     {
         transform.localScale = new Vector2(-(0.5f), 0.5f);

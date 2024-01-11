@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4824491848570893378}
   - component: {fileID: 1328013377105745467}
   - component: {fileID: 274255838595682192}
+  - component: {fileID: 8071502536556440207}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1629855145
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -192,5 +193,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a59f443e32639c1458262568a53636ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8071502536556440207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5509954973411278419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e962dbc735c0b640bee9e53c74a585b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHp: 20
+  playerMana: 20
   playerSpeed: 5
-  climbSpeed: 5
+  playerClimbSpeed: 2
+  playerCaps: {fileID: 0}
+  playerRb: {fileID: 0}

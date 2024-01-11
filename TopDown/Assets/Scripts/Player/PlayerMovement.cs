@@ -6,17 +6,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] float playerSpeed = 5f;
-    [SerializeField] float climbSpeed = 2f;
-
-    Rigidbody2D playerRb;
+    PlayerStatus playerStatus;
     Vector2 moveInput;
-    CapsuleCollider2D playerCaps;
 
     void Start()
     {
-        playerRb = GetComponent<Rigidbody2D>();
-        playerCaps = GetComponent<CapsuleCollider2D>();
+        playerStatus = GetComponent<PlayerStatus>();
     }
 
     void Update()
@@ -31,16 +26,16 @@ public class PlayerMovement : MonoBehaviour
     }
     void Run()
     {
-        Vector2 playerVelocity = new Vector2(moveInput.x * playerSpeed, moveInput.y * playerSpeed);
-        playerRb.velocity = playerVelocity;
+        Vector2 playerVelocity = new Vector2(moveInput.x * playerStatus.playerSpeed, moveInput.y * playerStatus.playerSpeed);
+        playerStatus.playerRb.velocity = playerVelocity;
     }
     void ClimbLadder()
     {
-        if (!playerCaps.IsTouchingLayers(LayerMask.GetMask("Climbing")))
+        if (!playerStatus.playerCaps.IsTouchingLayers(LayerMask.GetMask("Climbing")))
         {
             return;
         }
-        Vector2 climbVelocity = new Vector2(playerRb.velocity.x, Mathf.Abs(transform.position.y * climbSpeed));
-        playerRb.velocity = climbVelocity;
+        Vector2 climbVelocity = new Vector2(playerStatus.playerRb.velocity.x, Mathf.Abs(transform.position.y * playerStatus.playerClimbSpeed));
+        playerStatus.playerRb.velocity = climbVelocity;
     }
 }
