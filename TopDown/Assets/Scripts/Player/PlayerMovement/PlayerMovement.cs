@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        playerStatus = GetComponent<PlayerStatus>();
+        playerStatus = FindObjectOfType<PlayerStatus>();
     }
 
     void Update()
@@ -38,4 +37,5 @@ public class PlayerMovement : MonoBehaviour
         Vector2 climbVelocity = new Vector2(playerStatus.playerRb.velocity.x, Mathf.Abs(transform.position.y * playerStatus.playerClimbSpeed));
         playerStatus.playerRb.velocity = climbVelocity;
     }
+
 }
