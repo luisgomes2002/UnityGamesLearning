@@ -10,6 +10,7 @@ public class PlayerRangeAttack : MonoBehaviour
 
     void Start()
     {
+
     }
 
     void Update()
