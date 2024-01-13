@@ -1,13 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class DefaultSlime : Enemies
 {
-    [SerializeField] float enemySpeed = 2f;
-    Rigidbody2D enemyRb;
-
     void Start()
     {
         enemyRb = GetComponent<Rigidbody2D>();
@@ -15,13 +11,16 @@ public class EnemyMovement : MonoBehaviour
 
     void Update()
     {
-        OnMove();
+        EnemyDie();
+        EnemyMovement();
     }
 
-    void OnMove()
+    //Slime Movement
+    protected override void EnemyMovement()
     {
         enemyRb.velocity = new Vector2(enemySpeed, 0f);
     }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Wall")
@@ -30,6 +29,7 @@ public class EnemyMovement : MonoBehaviour
             FlipEnemyFacing();
         }
     }
+
     void FlipEnemyFacing()
     {
         transform.localScale = new Vector2(-(0.5f), 0.5f);

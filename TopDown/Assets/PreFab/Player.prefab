@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 1328013377105745467}
   - component: {fileID: 274255838595682192}
   - component: {fileID: 8071502536556440207}
+  - component: {fileID: 2713570466513698445}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -243,3 +244,17 @@ MonoBehaviour:
   playerClimbSpeed: 2
   playerCaps: {fileID: 0}
   playerRb: {fileID: 0}
+--- !u!114 &2713570466513698445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5509954973411278419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f00538d3a4b103f49b40dddc788fccb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spell: {fileID: 7052736848847494075, guid: 39c7592565fc04b43837a32a997da53a, type: 3}
+  hand: {fileID: 5817761499518403564}

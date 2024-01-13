@@ -4,20 +4,22 @@ using UnityEngine;
 
 public abstract class SpellsDefault : MonoBehaviour
 {
-    public float damage;
-    public float value;
-    public float range;
-    public string type;
-    public string spellsName;
-    public float manaRequired;
+    public float spellDamage;
+    public float spellValue;
+    public float spellRange;
+    public string spellType;
+    public string spellName;
+    public float spellManaRequired;
+    public float spellSpeed;
+    public float spellCastingTime;
+    protected Rigidbody2D spellRb;
 
-    public SpellsDefault(float damage, float value, float range, string type, string spellsName, float manaRequired)
+    public void OnCollisionEnter2D(Collision2D col)
     {
-        this.damage = damage;
-        this.value = value;
-        this.range = range;
-        this.type = type;
-        this.spellsName = spellsName;
-        this.manaRequired = manaRequired;
+        if (col.gameObject.tag == "Enemy")
+        {
+            col.gameObject.GetComponent<Enemies>().TakeDamage(spellDamage);
+        }
+        Destroy(gameObject);
     }
 }

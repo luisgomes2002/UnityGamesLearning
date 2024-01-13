@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerRangeAttack : MonoBehaviour
 {
-    [SerializeField] GameObject spell;
-    [SerializeField] Transform hand;
+    [SerializeField] GameObject inHand;
+    [SerializeField] Transform handPosition;
 
     void Start()
     {
@@ -15,15 +14,15 @@ public class PlayerRangeAttack : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Instantiate(spell, hand.position, transform.rotation);
-        }
+        AimAndShoot();
     }
 
-    // void RangeAttack(InputValue value)
-    // {
-    //     Debug.Log("Fire");
-    //     Instantiate(blueNormalSpell.spellGameObject, hand.position, transform.rotation);
-    // }
+    void AimAndShoot()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Instantiate(inHand, handPosition.position, Quaternion.identity);
+        }
+
+    }
 }
