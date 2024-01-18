@@ -41,3 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3610016801
+    locked: 0
+  - name: Water
+    uniqueID: 2696021039
+    locked: 0
+  - name: Platforms
+    uniqueID: 4289709021
+    locked: 0
+  - name: Enemies
+    uniqueID: 2627731523
+    locked: 0
+  - name: Player
+    uniqueID: 3565961323
+    locked: 0
