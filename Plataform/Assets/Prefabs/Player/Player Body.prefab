@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3453596575253593871}
   - component: {fileID: -7994795223846617310}
   - component: {fileID: 433303824112685262}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -729005973
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -586977209, guid: d6ab79ae6e58ef44e9bd57fb2a18906e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -171,7 +171,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.44, y: 0.72}
+  m_Size: {x: 0.44, y: 0.87}
   m_Direction: 0
 --- !u!61 &3453596575253593871
 BoxCollider2D:
@@ -202,7 +202,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.0068695545, y: -0.4398545}
@@ -262,4 +262,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpeed: 5
   playerJumpForce: 15
+  playerClimbingSpeed: 5
   playerScore: 0
