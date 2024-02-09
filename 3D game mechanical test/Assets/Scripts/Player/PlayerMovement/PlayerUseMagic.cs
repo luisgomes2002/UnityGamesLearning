@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerUseMagic : MonoBehaviour
 {
     PlayerStatus playerStatus;
-    ParticleSystem magicParticleSystem = null;
+    [SerializeField] Transform magicSpawnPoint;
+    [SerializeField] ParticleSystem magicParticleSystem;
     [SerializeField] GameObject magicSlot1;
     DefaultMagic magic;
     bool isCasting = false;
@@ -14,8 +15,8 @@ public class PlayerUseMagic : MonoBehaviour
     void Start()
     {
         playerStatus = GetComponent<PlayerStatus>();
-        magicParticleSystem = magicSlot1.GetComponent<ParticleSystem>();
         magic = magicSlot1.GetComponent<DefaultMagic>();
+        magicParticleSystem = magicSlot1.GetComponent<ParticleSystem>();
     }
 
     void Update()
@@ -23,9 +24,11 @@ public class PlayerUseMagic : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1) && !isCasting && playerStatus.playerMana >= magic.MagicCost)
         {
             Debug.Log("Magia de cura começou.");
+
             isCasting = true;
             playerStatus.playerMana -= magic.MagicCost;
             magicParticleSystem.Play();
+            Instantiate(magicParticleSystem, magicSpawnPoint.position, Quaternion.identity);
         }
 
         if (isCasting)

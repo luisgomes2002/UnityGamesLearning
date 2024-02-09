@@ -2013,6 +2013,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb58e8f2831a51f45a44a261e6710cdd, type: 3}
+--- !u!1 &1318030141
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1318030142}
+  m_Layer: 0
+  m_Name: PlayerMagicGeneration
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1318030142
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318030141}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.099, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2686890239520361593}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1434461190 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 480112, guid: 8e302007cba46d94b970c6a0955b9628, type: 3}
@@ -3094,6 +3125,7 @@ Transform:
   - {fileID: 2686890239520361337}
   - {fileID: 2686890239520361339}
   - {fileID: 7168069894885518855}
+  - {fileID: 1318030142}
   m_Father: {fileID: 775155318}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2686890239520361597
@@ -4415,7 +4447,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 430b148091b540a46866d123cb06f471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  magicSlot1: {fileID: -6489085334946925664, guid: 12a56ee4630040c4eb17ae9707ed4cef, type: 3}
+  magicSpawnPoint: {fileID: 1318030142}
+  magicParticleSystem: {fileID: 0}
+  magicSlot1: {fileID: 7986504087968017091, guid: 12a56ee4630040c4eb17ae9707ed4cef, type: 3}
 --- !u!114 &7900886812127285856
 MonoBehaviour:
   m_ObjectHideFlags: 0
