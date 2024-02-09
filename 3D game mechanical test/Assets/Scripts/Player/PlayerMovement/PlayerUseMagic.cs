@@ -5,54 +5,41 @@ using UnityEngine;
 public class PlayerUseMagic : MonoBehaviour
 {
     PlayerStatus playerStatus;
-    [SerializeField] public float healAmountPerSecond = 3.2f;
-    [SerializeField] ParticleSystem healingCircle = null;
-    bool isHealing = false;
+    ParticleSystem magicParticleSystem = null;
+    [SerializeField] GameObject magicSlot1;
+    DefaultMagic magic;
+    bool isCasting = false;
     float timer = 0f;
-    readonly float duration = 4f;
-    //mana necessaria para usar a magia
 
     void Start()
     {
         playerStatus = GetComponent<PlayerStatus>();
+        magicParticleSystem = magicSlot1.GetComponent<ParticleSystem>();
+        magic = magicSlot1.GetComponent<DefaultMagic>();
     }
 
     void Update()
     {
-        UseMagic();
-    }
-
-    void UseMagic()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !isHealing && playerStatus.playerMana >= 5.7f)
+        if (Input.GetKeyDown(KeyCode.Alpha1) && !isCasting && playerStatus.playerMana >= magic.MagicCost)
         {
             Debug.Log("Magia de cura começou.");
-            isHealing = true;
-            playerStatus.playerMana -= 5.7f;
-            healingCircle.Play();
-
+            isCasting = true;
+            playerStatus.playerMana -= magic.MagicCost;
+            magicParticleSystem.Play();
         }
 
-        if (isHealing)
+        if (isCasting)
         {
             timer += Time.deltaTime;
-            playerStatus.playerCurrentHealth += healAmountPerSecond * Time.deltaTime;
-            Debug.Log("Cura: " + playerStatus.playerCurrentHealth.ToString("F2"));
+            magic.UseMagic(playerStatus);
 
-            if (playerStatus.playerCurrentHealth > playerStatus.playerMaxHealth)
+            if (timer >= magic.MagicDuration)
             {
-                playerStatus.playerCurrentHealth = playerStatus.playerMaxHealth;
-            }
-
-            if (timer >= duration)
-            {
-                isHealing = false;
+                isCasting = false;
                 timer = 0f;
-                healingCircle.Stop();
+                magicParticleSystem.Stop();
                 Debug.Log("Magia de cura terminou.");
             }
         }
-
-
     }
 }
