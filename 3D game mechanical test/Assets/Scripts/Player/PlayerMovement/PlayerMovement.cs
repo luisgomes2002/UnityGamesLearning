@@ -4,50 +4,47 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    PlayerStatus playerStatus;
     [SerializeField] CharacterController controller;
-    [SerializeField] float speed = 5;
-    [SerializeField] float jumpHeight = 3f;
-    [SerializeField] float gravity = -9.18f;
     [SerializeField] Transform groundCheck;
     [SerializeField] float groundDistance = 0.4f;
     [SerializeField] LayerMask groundMask;
-    private Animator animator;
+    Animator animator;
+    float gravity = -9.18f;
     Vector3 velocity;
     bool isGrounded;
     int moveXParameter;
     int moveZParameter;
     int jumpAnimation;
-    int meleeAttackOneHandedAnimation;
+    int fallAnimation;
     float animationPlayTransition = 0.15f;
 
     void Start()
     {
+        playerStatus = GetComponent<PlayerStatus>();
         animator = GetComponent<Animator>();
         moveXParameter = Animator.StringToHash("MoveX");
         moveZParameter = Animator.StringToHash("MoveZ");
         jumpAnimation = Animator.StringToHash("Jump");
-        meleeAttackOneHandedAnimation = Animator.StringToHash("MeleeAttack_OneHanded");
+        fallAnimation = Animator.StringToHash("Y");
+
     }
 
     void Update()
     {
         OnMove();
         OnJump();
-        MeleeAttackOneHanded();
-    }
 
-    void MeleeAttackOneHanded()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
+        float PlayerYPosition = transform.position.y;
+        if (PlayerYPosition > 0.1f)
         {
-            animator.Play(meleeAttackOneHandedAnimation);
+            animator.SetFloat(fallAnimation, PlayerYPosition);
         }
     }
 
     void OnMove()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        Debug.Log(isGrounded);
+        isGrounded = controller.collisionFlags == CollisionFlags.Below;
 
         if (isGrounded && velocity.y < 0)
         {
@@ -56,11 +53,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && isGrounded)
         {
-            speed = 10;
+            playerStatus.playerSpeed = 200f;
         }
         else
         {
-            speed = 5;
+            playerStatus.playerSpeed = 5f;
         }
 
         float inputX = Input.GetAxis("Horizontal");
@@ -68,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 move = transform.right * inputX + transform.forward * inputY;
 
-        controller.Move(move * speed * Time.deltaTime);
+        controller.Move(move * playerStatus.playerSpeed * Time.deltaTime);
 
         animator.SetFloat(moveXParameter, inputX);
         animator.SetFloat(moveZParameter, inputY);
@@ -76,11 +73,11 @@ public class PlayerMovement : MonoBehaviour
 
     void OnJump()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        isGrounded = controller.collisionFlags == CollisionFlags.Below;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -3f * gravity);
+            velocity.y = Mathf.Sqrt(playerStatus.playerJumpHeight * -3f * gravity);
             animator.CrossFade(jumpAnimation, animationPlayTransition);
         }
 
