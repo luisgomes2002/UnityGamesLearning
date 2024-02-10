@@ -10,14 +10,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float groundDistance = 0.4f;
     [SerializeField] LayerMask groundMask;
     Animator animator;
-    float gravity = -9.18f;
     Vector3 velocity;
-    bool isGrounded;
+
+    //Animator Parameter
     int moveXParameter;
     int moveZParameter;
-    int jumpAnimation;
-    int fallAnimation;
-    float animationPlayTransition = 0.15f;
+    int jumpParameter;
+    int fallParameter;
+
+    //Animator Boll
+    bool isJumping = false;
+    bool isFalling = false;
+    bool isGrounded = false;
+    bool isMoving = false;
 
     void Start()
     {
@@ -25,64 +30,85 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         moveXParameter = Animator.StringToHash("MoveX");
         moveZParameter = Animator.StringToHash("MoveZ");
-        jumpAnimation = Animator.StringToHash("Jump");
-        fallAnimation = Animator.StringToHash("Y");
-
+        jumpParameter = Animator.StringToHash("isJumping");
+        fallParameter = Animator.StringToHash("isFalling");
     }
 
     void Update()
     {
+        OnCollision();
         OnMove();
         OnJump();
+        OnFall();
+    }
 
-        float PlayerYPosition = transform.position.y;
-        if (PlayerYPosition > 0.1f)
+    void OnCollision()
+    {
+        if (controller.collisionFlags == CollisionFlags.Below)
         {
-            animator.SetFloat(fallAnimation, PlayerYPosition);
+            isGrounded = true;
+            Debug.Log(isGrounded);
+            animator.SetBool("isGrounded", isGrounded);
+        }
+        else
+        {
+            animator.SetBool("isGrounded", isGrounded);
         }
     }
 
     void OnMove()
     {
-        isGrounded = controller.collisionFlags == CollisionFlags.Below;
-
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && isGrounded)
-        {
-            playerStatus.playerSpeed = 200f;
-        }
-        else
-        {
-            playerStatus.playerSpeed = 5f;
-        }
-
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.right * inputX + transform.forward * inputY;
+        if (inputX > 0 || inputX < 0 || inputY > 0 || inputY < 0)
+        {
+            isMoving = true;
+            animator.SetBool("isMoving", isMoving);
+            Vector3 move = transform.right * inputX + transform.forward * inputY;
 
-        controller.Move(move * playerStatus.playerSpeed * Time.deltaTime);
+            controller.Move(move * playerStatus.playerSpeed * Time.deltaTime);
 
-        animator.SetFloat(moveXParameter, inputX);
-        animator.SetFloat(moveZParameter, inputY);
+            animator.SetFloat(moveXParameter, inputX);
+            animator.SetFloat(moveZParameter, inputY);
+        }
+        else
+        {
+            isMoving = false;
+            animator.SetBool("isMoving", isMoving);
+        }
     }
 
     void OnJump()
     {
-        isGrounded = controller.collisionFlags == CollisionFlags.Below;
-
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            velocity.y = Mathf.Sqrt(playerStatus.playerJumpHeight * -3f * gravity);
-            animator.CrossFade(jumpAnimation, animationPlayTransition);
+            isJumping = true;
+            isGrounded = false;
+            velocity.y = Mathf.Sqrt(playerStatus.playerJumpHeight * -3f * Physics.gravity.y);
+            animator.SetBool(jumpParameter, isJumping);
         }
 
-        velocity.y += gravity * Time.deltaTime;
+        velocity.y += Physics.gravity.y * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    void OnFall()
+    {
+        if (velocity.y < -0.1f)
+        {
+            isJumping = false;
+            isFalling = true;
+            animator.SetBool(jumpParameter, isJumping);
+            animator.SetBool(fallParameter, isFalling);
+        }
+
+        if (isGrounded)
+        {
+            isFalling = false;
+            isGrounded = true;
+            animator.SetBool(fallParameter, isFalling);
+        }
     }
 }

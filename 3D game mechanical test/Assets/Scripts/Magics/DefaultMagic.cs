@@ -12,6 +12,7 @@ public abstract class DefaultMagic : MonoBehaviour
     [SerializeField] protected float magicCost;
 
     public string MagicType => magicType;
+    // public string MagicType { get { return magicType; } }
     public string MagicName => magicName;
     public float MagicDamage => magicDamage;
     public float MagicRange => magicRange;
