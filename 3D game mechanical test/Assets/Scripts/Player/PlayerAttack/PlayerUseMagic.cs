@@ -23,7 +23,7 @@ public class PlayerUseMagic : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) && !isCasting && playerStatus.playerMana >= magic.MagicCost)
         {
-            Debug.Log("Magia de cura começou.");
+            Debug.Log("Magia começou.");
 
             isCasting = true;
             playerStatus.playerMana -= magic.MagicCost;
@@ -41,7 +41,7 @@ public class PlayerUseMagic : MonoBehaviour
                 isCasting = false;
                 timer = 0f;
                 magicParticleSystem.Stop();
-                Debug.Log("Magia de cura terminou.");
+                Debug.Log("Magia terminou.");
             }
         }
     }

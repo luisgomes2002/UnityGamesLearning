@@ -14,11 +14,7 @@ public class HealingCircle : DefaultMagic
     public override void UseMagic(PlayerStatus playerStatus)
     {
         playerStatus.playerCurrentHealth += healAmountPerSecond * Time.deltaTime;
-        Debug.Log("Cura: " + playerStatus.playerCurrentHealth.ToString("F2"));
 
-        if (playerStatus.playerCurrentHealth > playerStatus.playerMaxHealth)
-        {
-            playerStatus.playerCurrentHealth = playerStatus.playerMaxHealth;
-        }
+        if (playerStatus.playerCurrentHealth > playerStatus.playerMaxHealth) playerStatus.playerCurrentHealth = playerStatus.playerMaxHealth;
     }
 }

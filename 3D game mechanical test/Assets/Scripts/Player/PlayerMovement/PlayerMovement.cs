@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] Camera mainCamera;
+    [SerializeField] float rotationSpeed = 10f;
+    CharacterController controller;
     PlayerStatus playerStatus;
-    [SerializeField] CharacterController controller;
-    [SerializeField] Transform groundCheck;
-    [SerializeField] float groundDistance = 0.4f;
-    [SerializeField] LayerMask groundMask;
     Animator animator;
     Vector3 velocity;
 
@@ -24,8 +24,13 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded = false;
     bool isMoving = false;
 
+
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        controller = GetComponent<CharacterController>();
         playerStatus = GetComponent<PlayerStatus>();
         animator = GetComponent<Animator>();
         moveXParameter = Animator.StringToHash("MoveX");
@@ -47,7 +52,6 @@ public class PlayerMovement : MonoBehaviour
         if (controller.collisionFlags == CollisionFlags.Below)
         {
             isGrounded = true;
-            Debug.Log(isGrounded);
             animator.SetBool("isGrounded", isGrounded);
         }
         else
@@ -61,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Vertical");
 
-        if (inputX > 0 || inputX < 0 || inputY > 0 || inputY < 0)
+        if (inputX != 0 || inputY != 0)
         {
             isMoving = true;
             animator.SetBool("isMoving", isMoving);
@@ -71,9 +75,16 @@ public class PlayerMovement : MonoBehaviour
 
             animator.SetFloat(moveXParameter, inputX);
             animator.SetFloat(moveZParameter, inputY);
+
+            //Camera
+            Vector3 lookDirection = mainCamera.transform.forward;
+            lookDirection.y = 0f;
+            Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
         else
         {
+
             isMoving = false;
             animator.SetBool("isMoving", isMoving);
         }
